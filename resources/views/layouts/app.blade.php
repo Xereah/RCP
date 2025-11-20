@@ -7,30 +7,40 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <!-- Material Icons -->
+        <link href="{{ asset('css/font.css') }}" rel="stylesheet">    
+        <script src="{{ asset('js/tailwindcom.js') }}"></script>    
+        @livewireStyles    
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            <livewire:layout.navigation />
+    <body class="font-sans antialiased bg-slate-50">
+        <div class="h-screen flex">
+            <livewire:layout.sidebar />
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex-1 flex flex-col min-h-screen w-full">
+                <livewire:layout.navigation />
+
+                <!-- Page Heading -->
+                @isset($header)
+                <header class="bg-white/80 shadow-sm border-b border-slate-200">
+                    <div class="max-w-8xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
-            @endif
+                @endisset
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+                <!-- Page Content -->
+                <main class="flex-1 overflow-y-auto bg-slate-50">
+                    <div class="p-4 sm:p-6 lg:p-8">
+                        @yield('content')
+                        {{ $slot }}
+                    </div>
+                </main>
+            </div>
         </div>
+        <!-- Livewire Scripts -->
+        @livewireScripts      
+        <script src="{{ asset('js/sweetalert2@11.js') }}"></script>
     </body>
 </html>
+
+
