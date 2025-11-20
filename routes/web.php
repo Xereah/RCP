@@ -41,4 +41,10 @@ Route::get('/work-statuses/create', \App\Livewire\WorkStatuses\Create::class)->n
 Route::get('/work-statuses/show/{workStatus}', \App\Livewire\WorkStatuses\Show::class)->name('work-statuses.show');
 Route::get('/work-statuses/update/{workStatus}', \App\Livewire\WorkStatuses\Edit::class)->name('work-statuses.edit');
 
+//obecnosci
+Route::get('/work-sessions', \App\Livewire\WorkSessions\Index::class)->name('work-sessions.index');
+Route::get('/work-sessions/create', \App\Livewire\WorkSessions\Create::class)->name('work-sessions.create');
+Route::get('/work-sessions/show/{workSession}', \App\Livewire\WorkSessions\Show::class)->name('work-sessions.show');
+Route::get('/work-sessions/update/{workSession}', \App\Livewire\WorkSessions\Edit::class)->name('work-sessions.edit');
+
 require __DIR__.'/auth.php';
