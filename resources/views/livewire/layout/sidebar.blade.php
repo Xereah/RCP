@@ -30,12 +30,19 @@ new class extends Component
     <!-- Navigation Area -->
     <nav class="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
     <div class="space-y-1">
-            <a href="{{ route('users.index') }}"
-                class="flex items-center px-4 py-3 text-gray-200 rounded-lg hover:bg-indigo-600/30 transition-colors group">
-                <span class="material-icons-round text-gray-300 group-hover:text-indigo-400 mr-3">person</span>
-                <span class="text-xl font-semibold lg:block">Użytkownicy</span>
-            </a>
-        </div>
+        <a href="{{ route('users.index') }}"
+            class="flex items-center px-4 py-3 text-gray-200 rounded-lg hover:bg-indigo-600/30 transition-colors group">
+            <span class="material-icons-round text-gray-300 group-hover:text-indigo-400 mr-3">person</span>
+            <span class="text-xl font-semibold lg:block">Użytkownicy</span>
+        </a>
+    </div>
+    <div class="space-y-1">
+        <a href="{{ route('roles.index') }}"
+            class="flex items-center px-4 py-3 text-gray-200 rounded-lg hover:bg-indigo-600/30 transition-colors group">
+            <span class="material-icons-round text-gray-300 group-hover:text-indigo-400 mr-3">security</span>
+            <span class="text-xl font-semibold lg:block">Role</span>
+        </a>
+    </div>
        
     </nav>
 

@@ -6,7 +6,9 @@ use App\Models\Role;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Layout;
 
+#[Layout('layouts.app')]
 class Index extends Component
 {
     use WithPagination;

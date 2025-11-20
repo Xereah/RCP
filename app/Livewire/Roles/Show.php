@@ -5,7 +5,9 @@ namespace App\Livewire\Roles;
 use App\Livewire\Forms\RoleForm;
 use App\Models\Role;
 use Livewire\Component;
+use Livewire\Attributes\Layout;
 
+#[Layout('layouts.app')]
 class Show extends Component
 {
     public RoleForm $form;
