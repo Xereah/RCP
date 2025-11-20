@@ -38,7 +38,7 @@
                 <div class="relative flex items-center justify-between">
                     <div>
                         <p class="text-sm uppercase tracking-[0.2em] text-emerald-200/80">Wejście</p>
-                        <p class="mt-2 text-3xl font-semibold text-white">Zarejestruj start</p>
+                        <p class="mt-2 text-3xl font-semibold text-white">Zarejestruj wejście</p>
                         <p class="mt-3 text-sm text-white/70">Numer wpiszesz na wirtualnej klawiaturze.</p>
                     </div>
                     <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-500/20 text-white">
@@ -56,7 +56,7 @@
                 <div class="relative flex items-center justify-between">
                     <div>
                         <p class="text-sm uppercase tracking-[0.2em] text-rose-200/80">Wyjście</p>
-                        <p class="mt-2 text-3xl font-semibold text-white">Zakończ zmianę</p>
+                        <p class="mt-2 text-3xl font-semibold text-white">Zarejestruj wyjście</p>
                         <p class="mt-3 text-sm text-white/70">System automatycznie policzy przepracowany czas.</p>
                     </div>
                     <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-rose-500/20 text-white">

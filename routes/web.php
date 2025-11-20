@@ -2,11 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome');
+Route::get('/', function () {
+    return redirect()->route('rcp-panel.index');
+});
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::get('/dashboard', function () {
+    return redirect()->route('work-sessions.index');
+})->middleware(['auth', 'verified'])
+  ->name('dashboard');
+
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

@@ -1,28 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Forms;
 
 use App\Models\WorkSession;
+use Illuminate\Support\Carbon;
 use Livewire\Form;
 
 class WorkSessionForm extends Form
 {
-    public ?WorkSession $workSessionModel;
-    
-    public $personel_id = '';
-    public $work_date = '';
-    public $start_time = '';
-    public $end_time = '';
-    public $duration = '';
-    public $notes = '';
-    public $status_id = '';
+    public ?WorkSession $workSessionModel = null;
+
+    public ?int $personel_id = null;
+    public ?string $work_date = null;
+    public ?string $start_time = null;
+    public ?string $end_time = null;
+    public ?string $duration = null;
+    public ?string $notes = null;
+    public ?int $status_id = null;
 
     public function rules(): array
     {
         return [
-			'personel_id' => 'required',
-			'notes' => 'string',
-			'status_id' => 'required',
+            'personel_id' => ['required', 'integer', 'exists:personel,id'],
+            'work_date' => ['required', 'date'],
+            'start_time' => ['required', 'date_format:H:i'],
+            'end_time' => ['required', 'date_format:H:i', 'after:start_time'],
+            'notes' => ['nullable', 'string'],
+            'status_id' => ['required', 'integer', 'exists:work_statuses,id'],
         ];
     }
 
@@ -41,15 +47,40 @@ class WorkSessionForm extends Form
 
     public function store(): void
     {
-        $this->workSessionModel->create($this->validate());
+        $this->workSessionModel->create($this->buildPayload());
 
         $this->reset();
     }
 
     public function update(): void
     {
-        $this->workSessionModel->update($this->validate());
+        $this->workSessionModel->update($this->buildPayload());
 
         $this->reset();
+    }
+
+    protected function buildPayload(): array
+    {
+        $data = $this->validate();
+
+        $data['duration'] = $this->calculateDurationMinutes(
+            $data['work_date'],
+            $data['start_time'],
+            $data['end_time']
+        );
+
+        return $data;
+    }
+
+    protected function calculateDurationMinutes(string $date, string $start, string $end): int
+    {
+        $startDateTime = Carbon::parse("{$date} {$start}");
+        $endDateTime = Carbon::parse("{$date} {$end}");
+
+        if ($endDateTime->lessThanOrEqualTo($startDateTime)) {
+            $endDateTime->addDay();
+        }
+
+        return (int) $startDateTime->diffInMinutes($endDateTime);
     }
 }

@@ -58,13 +58,42 @@ class WorkSession extends Model
         return $this->belongsTo(\App\Models\WorkStatus::class, 'status_id', 'id');
     }
 
+    /**
+     * Zwraca zaokrąglony czas pracy zgodnie z zasadami nadgodzin.
+     * Po 8h nadgodziny są zaokrąglane w dół do pełnych 15 minut.
+     */
+    public function getAdjustedDuration(): int
+    {
+        if ($this->duration === null) {
+            return 0;
+        }
+
+        $minutes = max(0, (int) $this->duration);
+        $standardWorkMinutes = 480; // 8 godzin
+
+        // Jeśli przepracowano 8h lub mniej, zwróć faktyczny czas
+        if ($minutes <= $standardWorkMinutes) {
+            return $minutes;
+        }
+
+        // Oblicz nadgodziny
+        $overtimeMinutes = $minutes - $standardWorkMinutes;
+
+        // Zaokrąglij nadgodziny w dół do pełnych 15 minut
+        $roundedOvertimeMinutes = (int) (floor($overtimeMinutes / 15) * 15);
+
+        // Zwróć 8h + zaokrąglone nadgodziny
+        return $standardWorkMinutes + $roundedOvertimeMinutes;
+    }
+
     public function getDurationHumanAttribute(): ?string
     {
         if ($this->duration === null) {
             return null;
         }
 
-        $minutes = max(0, (int) $this->duration);
+        // Używamy zaokrąglonej wartości dla wyświetlania
+        $minutes = $this->getAdjustedDuration();
         $hours = intdiv($minutes, 60);
         $leftover = $minutes % 60;
 

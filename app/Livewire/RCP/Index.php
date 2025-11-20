@@ -106,6 +106,7 @@ class Index extends Component
     private function handleEntry(int $personelId): string
     {
         $now = now();
+        $today = $now->toDateString();
 
         $activeSession = WorkSession::query()
             ->where('personel_id', $personelId)
@@ -119,9 +120,22 @@ class Index extends Component
             ]);
         }
 
+        // Sprawdź, czy pracownik już dzisiaj rejestrował wejście
+        $todayEntryExists = WorkSession::query()
+            ->where('personel_id', $personelId)
+            ->where('work_date', $today)
+            ->whereNotNull('start_time')
+            ->exists();
+
+        if ($todayEntryExists) {
+            throw ValidationException::withMessages([
+                'employeeNumber' => 'Wejście zostało już zarejestrowane dla tego pracownika w dniu dzisiejszym.',
+            ]);
+        }
+
         WorkSession::query()->create([
             'personel_id' => $personelId,
-            'work_date' => $now->toDateString(),
+            'work_date' => $today,
             'start_time' => $now->format('H:i:s'),
             'status_id' => $this->resolveStatusId('entry'),
         ]);
@@ -144,15 +158,57 @@ class Index extends Component
         }
 
         $now = now();
+        $today = $now->toDateString();
+
+        // Sprawdź, czy pracownik już dzisiaj rejestrował wyjście
+        $todayExitExists = WorkSession::query()
+            ->where('personel_id', $personelId)
+            ->where('work_date', $today)
+            ->whereNotNull('end_time')
+            ->exists();
+
+        if ($todayExitExists) {
+            throw ValidationException::withMessages([
+                'employeeNumber' => 'Wyjście zostało już zarejestrowane dla tego pracownika w dniu dzisiejszym.',
+            ]);
+        }
+
         $start = Carbon::parse("{$session->work_date} {$session->start_time}");
+        $durationMinutes = $start->diffInMinutes($now);
+
+        // Oblicz czas trwania z zaokrągleniem nadgodzin
+        $adjustedDuration = $this->calculateAdjustedDuration($durationMinutes);
 
         $session->update([
             'end_time' => $now->format('H:i:s'),
-            'duration' => $start->diffInMinutes($now),
+            'duration' => $adjustedDuration,
             'status_id' => $this->resolveStatusId('exit'),
         ]);
 
         return 'Wyjście zostało zapisane. Do zobaczenia!';
+    }
+
+    /**
+     * Oblicza skorygowany czas pracy z zaokrągleniem nadgodzin.
+     * Po 8h (480 min) nadgodziny zaokrąglane są w dół do pełnych 15 minut.
+     */
+    private function calculateAdjustedDuration(int $durationMinutes): int
+    {
+        $standardWorkMinutes = 480; // 8 godzin
+
+        // Jeśli przepracowano 8h lub mniej, zwróć faktyczny czas
+        if ($durationMinutes <= $standardWorkMinutes) {
+            return $durationMinutes;
+        }
+
+        // Oblicz nadgodziny
+        $overtimeMinutes = $durationMinutes - $standardWorkMinutes;
+
+        // Zaokrąglij nadgodziny w dół do pełnych 15 minut
+        $roundedOvertimeMinutes = (int) (floor($overtimeMinutes / 15) * 15);
+
+        // Zwróć 8h + zaokrąglone nadgodziny
+        return $standardWorkMinutes + $roundedOvertimeMinutes;
     }
 
     private function resolveStatusId(string $phase): int

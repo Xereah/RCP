@@ -58,7 +58,7 @@
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Data</th>                            
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Godzina wejścia</th>                            
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Godzina wyjścia</th>  
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Czas pracy</th>                            
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Zaliczony czas pracy</th>                            
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Status</th>                            
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Informacje</th>                          
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider"></th>                               
