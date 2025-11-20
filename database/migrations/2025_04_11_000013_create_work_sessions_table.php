@@ -18,7 +18,9 @@ return new class extends Migration
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->integer('duration')->nullable();
-            $table->string('notes')->nullable();   
+            $table->string('notes')->nullable();
+            $table->foreignId('status_id')->constrained('work_statuses');   
+
                    
             $table->timestamps();
             $table->softDeletes();

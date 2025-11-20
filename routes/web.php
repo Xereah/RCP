@@ -29,9 +29,16 @@ Route::get('/positions/create', \App\Livewire\Positions\Create::class)->name('po
 Route::get('/positions/show/{position}', \App\Livewire\Positions\Show::class)->name('positions.show');
 Route::get('/positions/update/{position}', \App\Livewire\Positions\Edit::class)->name('positions.edit');
 
+//pracownicy
 Route::get('/personels', \App\Livewire\Personels\Index::class)->name('personels.index');
 Route::get('/personels/create', \App\Livewire\Personels\Create::class)->name('personels.create');
 Route::get('/personels/show/{personel}', \App\Livewire\Personels\Show::class)->name('personels.show');
 Route::get('/personels/update/{personel}', \App\Livewire\Personels\Edit::class)->name('personels.edit');
+
+//statusy obecnosci
+Route::get('/work-statuses', \App\Livewire\WorkStatuses\Index::class)->name('work-statuses.index');
+Route::get('/work-statuses/create', \App\Livewire\WorkStatuses\Create::class)->name('work-statuses.create');
+Route::get('/work-statuses/show/{workStatus}', \App\Livewire\WorkStatuses\Show::class)->name('work-statuses.show');
+Route::get('/work-statuses/update/{workStatus}', \App\Livewire\WorkStatuses\Edit::class)->name('work-statuses.edit');
 
 require __DIR__.'/auth.php';

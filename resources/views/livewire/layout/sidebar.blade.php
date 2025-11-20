@@ -57,6 +57,13 @@ new class extends Component
             <span class="text-xl font-semibold lg:block">Pracownicy</span>
         </a>
     </div>
+    <div class="space-y-1">
+        <a href="{{ route('work-statuses.index') }}"
+            class="flex items-center px-4 py-3 text-gray-200 rounded-lg hover:bg-indigo-600/30 transition-colors group">
+            <span class="material-icons-round text-gray-300 group-hover:text-indigo-400 mr-3">check_circle</span>
+            <span class="text-xl font-semibold lg:block">Statusy obecności</span>
+        </a>
+    </div>
        
     </nav>
 
