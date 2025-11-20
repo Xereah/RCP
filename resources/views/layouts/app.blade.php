@@ -34,9 +34,11 @@
                         @yield('content')
                         {{ $slot }}
                     </div>
-                </main>
+                    
+                </main>               
             </div>
         </div>
+        
         <!-- Livewire Scripts -->
         @livewireScripts      
         <script src="{{ asset('js/sweetalert2@11.js') }}"></script>

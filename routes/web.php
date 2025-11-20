@@ -47,4 +47,7 @@ Route::get('/work-sessions/create', \App\Livewire\WorkSessions\Create::class)->n
 Route::get('/work-sessions/show/{workSession}', \App\Livewire\WorkSessions\Show::class)->name('work-sessions.show');
 Route::get('/work-sessions/update/{workSession}', \App\Livewire\WorkSessions\Edit::class)->name('work-sessions.edit');
 
+//panel RCP
+Route::get('/rcp-panel', \App\Livewire\RCP\Index::class)->name('rcp-panel.index');
+
 require __DIR__.'/auth.php';

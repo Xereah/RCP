@@ -56,7 +56,9 @@
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Imię i nazwisko</th>                            
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Stanowisko</th>                            
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Data</th>                            
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Godzina</th>                            
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Godzina wejścia</th>                            
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Godzina wyjścia</th>  
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Czas pracy</th>                            
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Status</th>                            
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Informacje</th>                          
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider"></th>                               
@@ -91,85 +93,77 @@
                                 </td>
                                 <!-- Last Name -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">
-                                        <div class="w-2 h-8 bg-indigo-600 rounded-full mr-3"></div>
+                                    <div class="flex items-center">                                        
                                         <div>
                                             <div class="text-base font-semibold text-gray-900">
-                                                {{ $workSession->personel->last_name }}
+                                                {{ $workSession->personel->last_name }}   {{ $workSession->personel->first_name }}
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                                 <!-- First Name -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">
-                                        <div class="w-2 h-8 bg-indigo-600 rounded-full mr-3"></div>
+                                    <div class="flex items-center">                                       
                                         <div>
                                             <div class="text-base font-semibold text-gray-900">
-                                                {{ $workSession->personel->first_name }}
+                                            {{ $workSession->personel->position->name }}
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                                 <!-- Position -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">
-                                        <div class="w-2 h-8 bg-indigo-600 rounded-full mr-3"></div>
+                                    <div class="flex items-center">                                        
                                         <div>
                                             <div class="text-base font-semibold text-gray-900">
-                                                {{ $workSession->personel->position->name }}
+                                            {{ $workSession->work_date }}
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                                 <!-- Work Date -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">
-                                        <div class="w-2 h-8 bg-indigo-600 rounded-full mr-3"></div>
+                                    <div class="flex items-center">                                       
                                         <div>
                                             <div class="text-base font-semibold text-gray-900">
-                                                {{ $workSession->work_date }}
+                                            {{ $workSession->start_time }}
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                                 <!-- Start Time -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">
-                                        <div class="w-2 h-8 bg-indigo-600 rounded-full mr-3"></div>
+                                    <div class="flex items-center">                                       
                                         <div>
                                             <div class="text-base font-semibold text-gray-900">
-                                                {{ $workSession->start_time }}
+                                            {{ $workSession->end_time ?? '-' }} 
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                                 <!-- End Time -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">
-                                        <div class="w-2 h-8 bg-indigo-600 rounded-full mr-3"></div>
+                                    <div class="flex items-center">                                        
                                         <div>
                                             <div class="text-base font-semibold text-gray-900">
-                                                {{ $workSession->end_time }}
+                                                {{ $workSession->duration_human ?? '-' }}
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                                 <!-- Status -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">
-                                        <div class="w-2 h-8 bg-indigo-600 rounded-full mr-3"></div>
+                                    <div class="flex items-center">                                       
                                         <div>
                                             <div class="text-base font-semibold text-gray-900">
-                                                {{ $workSession->workStatus->name }}
+                                            {{ $workSession->workStatus->name }}
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                                 <!-- Notes -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">
-                                        <div class="w-2 h-8 bg-indigo-600 rounded-full mr-3"></div>
+                                    <div class="flex items-center">                                       
                                         <div>
                                             <div class="text-base font-semibold text-gray-900">
                                                 {{ $workSession->notes }}
@@ -180,17 +174,17 @@
                                 <!-- Actions -->
                                 <td class="px-6 py-4">
                                     <div class="flex items-center space-x-2">
-                                        <a href="{{ route('roles.edit', $role->id) }}" 
+                                        <a href="{{ route('work-sessions.edit', $workSession->id) }}" 
                                            wire:navigate
                                            class="inline-flex items-center justify-center p-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                                           title="Edytuj rolę">
+                                           title="Edytuj obecność">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
                                             </svg>
                                         </a>
-                                        <button @click="confirmAction('delete', {{ $role->id }}, 'Na pewno chcesz usunąć tę rolę?', 'Tak, usuń!', 'warning')"
+                                        <button @click="confirmAction('delete', {{ $workSession->id }}, 'Na pewno chcesz usunąć tę obecność?', 'Tak, usuń!', 'warning')"
                                                class="inline-flex items-center justify-center p-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-                                                title="Usuń rolę">
+                                                title="Usuń obecność">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                             </svg>

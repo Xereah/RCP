@@ -16,9 +16,9 @@ new class extends Component
     }
 }; ?>
 
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 ">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#111827]/95 backdrop-blur-xl ">
+    <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 bg-[url('{{ asset('images/stopka_WBG.jpg') }}')] bg-left bg-no-repeat bg-contain">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->

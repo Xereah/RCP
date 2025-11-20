@@ -30,6 +30,9 @@ class WorkSession extends Model
     use SoftDeletes;
 
     protected $perPage = 20;
+    protected $casts = [
+        'duration' => 'integer',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -54,5 +57,25 @@ class WorkSession extends Model
     {
         return $this->belongsTo(\App\Models\WorkStatus::class, 'status_id', 'id');
     }
-    
+
+    public function getDurationHumanAttribute(): ?string
+    {
+        if ($this->duration === null) {
+            return null;
+        }
+
+        $minutes = max(0, (int) $this->duration);
+        $hours = intdiv($minutes, 60);
+        $leftover = $minutes % 60;
+
+        if ($hours === 0) {
+            return sprintf('%d min', $leftover);
+        }
+
+        if ($leftover === 0) {
+            return sprintf('%dh', $hours);
+        }
+
+        return sprintf('%dh %02dmin', $hours, $leftover);
+    }
 }

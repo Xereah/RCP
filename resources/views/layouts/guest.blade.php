@@ -7,24 +7,40 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <!-- Material Icons -->
+        <link href="{{ asset('css/font.css') }}" rel="stylesheet">    
+        <script src="{{ asset('js/tailwindcom.js') }}"></script>    
+        @livewireStyles    
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
-                <a href="/" wire:navigate>
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
-            </div>
+    <body class="font-sans antialiased bg-slate-50">
+        <div class="h-screen flex">
+           
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
+            <div class="flex-1 flex flex-col min-h-screen w-full">
+             
+
+                <!-- Page Heading -->
+                @isset($header)
+                <header class="bg-white/80 shadow-sm border-b border-slate-200">
+                    <div class="max-w-8xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+                @endisset
+
+                <!-- Page Content -->
+                <main class="flex-1 overflow-y-auto bg-slate-50">
+                    <div>
+                        @yield('content')
+                        {{ $slot }}
+                    </div>
+                </main>
             </div>
         </div>
+        <!-- Livewire Scripts -->
+        @livewireScripts      
+        <script src="{{ asset('js/sweetalert2@11.js') }}"></script>
     </body>
 </html>
+
+
