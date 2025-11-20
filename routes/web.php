@@ -23,4 +23,10 @@ Route::get('/roles/create', \App\Livewire\Roles\Create::class)->name('roles.crea
 Route::get('/roles/show/{role}', \App\Livewire\Roles\Show::class)->name('roles.show');
 Route::get('/roles/update/{role}', \App\Livewire\Roles\Edit::class)->name('roles.edit');
 
+//stanowiska
+Route::get('/positions', \App\Livewire\Positions\Index::class)->name('positions.index');
+Route::get('/positions/create', \App\Livewire\Positions\Create::class)->name('positions.create');
+Route::get('/positions/show/{position}', \App\Livewire\Positions\Show::class)->name('positions.show');
+Route::get('/positions/update/{position}', \App\Livewire\Positions\Edit::class)->name('positions.edit');
+
 require __DIR__.'/auth.php';

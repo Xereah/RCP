@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('last_name')->nullable();
             $table->string('first_name')->nullable();
             $table->string('email')->nullable();
-            $table->string('position')->nullable();
+            $table->foreignId('position_id')->constrained('position');
             $table->boolean('is_active')->default(true);
        
 
