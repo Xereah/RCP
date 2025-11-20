@@ -29,4 +29,9 @@ Route::get('/positions/create', \App\Livewire\Positions\Create::class)->name('po
 Route::get('/positions/show/{position}', \App\Livewire\Positions\Show::class)->name('positions.show');
 Route::get('/positions/update/{position}', \App\Livewire\Positions\Edit::class)->name('positions.edit');
 
+Route::get('/personels', \App\Livewire\Personels\Index::class)->name('personels.index');
+Route::get('/personels/create', \App\Livewire\Personels\Create::class)->name('personels.create');
+Route::get('/personels/show/{personel}', \App\Livewire\Personels\Show::class)->name('personels.show');
+Route::get('/personels/update/{personel}', \App\Livewire\Personels\Edit::class)->name('personels.edit');
+
 require __DIR__.'/auth.php';
