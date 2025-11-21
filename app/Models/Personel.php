@@ -36,7 +36,7 @@ class Personel extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['personal_number', 'last_name', 'first_name', 'email', 'position_id', 'is_active'];
+    protected $fillable = ['personal_number', 'last_name', 'first_name', 'work_place_id', 'email', 'position_id', 'is_active'];
 
 
     /**
@@ -54,5 +54,11 @@ class Personel extends Model
     {
         return $this->hasMany(\App\Models\WorkSession::class, 'id', 'personel_id');
     }
-    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function workPlace()
+    {
+        return $this->belongsTo(\App\Models\WorkPlace::class, 'work_place_id', 'id');
+    }
 }

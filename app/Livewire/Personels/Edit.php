@@ -7,6 +7,7 @@ use App\Models\Personel;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use App\Models\Position;
+use App\Models\WorkPlace;
 
 #[Layout('layouts.app')]    
 class Edit extends Component
@@ -14,11 +15,13 @@ class Edit extends Component
     public PersonelForm $form;
 
     public $positions;
+    public $workPlaces;
 
     public function mount(Personel $personel)
     {
         $this->form->setPersonelModel($personel);
         $this->positions = Position::all();
+        $this->workPlaces = WorkPlace::all();
     }
 
     public function save()

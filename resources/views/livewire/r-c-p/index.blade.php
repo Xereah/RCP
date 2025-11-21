@@ -1,25 +1,26 @@
 <div class="min-h-screen bg-slate-950 text-white py-12">
+    <div class="absolute right-6 top-6">
+        <a href="{{ route('login') }}" class="rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur 
+              border border-white/20 transition hover:bg-white/20">
+            Logowanie
+        </a>
+    </div>
     <div class="mx-auto max-w-5xl px-6 py-16">
-        <div class="rounded-[32px] border border-white/10 bg-white/5 p-10 text-center shadow-2xl shadow-indigo-900/30 backdrop-blur-md md:text-left">
+        <div
+            class="rounded-[32px] border border-white/10 bg-white/5 p-10 text-center shadow-2xl shadow-indigo-900/30 backdrop-blur-md md:text-left">
             <div class="flex flex-col gap-8 md:flex-row md:items-center">
                 <div class="flex-1 space-y-4">
                     <p class="text-xs uppercase tracking-[0.4em] text-indigo-200/80">Panel rejestracji</p>
                     <h1 class="text-4xl font-semibold text-white md:text-5xl">Rejestracja czasu pracy</h1>
-                    <p class="text-base text-slate-300">Wybierz akcję i wpisz numer na wirtualnej klawiaturze, aby system zapisał wejście lub wyjście Twojej zmiany.</p>
+                    <p class="text-base text-slate-300">Wybierz akcję i wpisz numer na wirtualnej klawiaturze, aby
+                        system zapisał wejście lub wyjście Twojej zmiany.</p>
                 </div>
                 <div class="flex justify-center md:justify-end">
-                    <div class="rounded-3xl border border-white/10 bg-gradient-to-br from-indigo-500/20 via-fuchsia-500/10 to-transparent p-6 shadow-xl shadow-indigo-900/50">
-                        <img src="{{ asset('images/Logo_WBG.jpg') }}" alt="Logo WBG" class="h-24 w-auto drop-shadow-md" />
-                    </div>
+                    <div class="inline-flex w-full items-center justify-center gap-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 px-10 py-6 text-8xl font-bold text-white shadow-[0_10px_25px_rgba(99,102,241,0.4)] md:w-auto"
+                        x-data="{ time: new Date().toLocaleTimeString('pl-PL', { hour12: false }) }"
+                        x-init="setInterval(() => time = new Date().toLocaleTimeString('pl-PL', { hour12: false }), 1000)"
+                        x-text="time"></div>
                 </div>
-            </div>
-
-            <div class="mt-10 flex flex-col items-center gap-3 md:flex-row md:justify-between">
-                <p class="text-sm text-slate-300"><img src="{{ asset('images/stopka_WBG.jpg') }}" alt="Logo WBG" class="h-24 w-auto drop-shadow-md" /></p>
-                <div class="inline-flex w-full items-center justify-center gap-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 px-10 py-6 text-4xl font-bold text-white shadow-[0_10px_25px_rgba(99,102,241,0.4)] md:w-auto"
-                    x-data="{ time: new Date().toLocaleTimeString('pl-PL', { hour12: false }) }"
-                    x-init="setInterval(() => time = new Date().toLocaleTimeString('pl-PL', { hour12: false }), 1000)"
-                    x-text="time"></div>
             </div>
         </div>
 
@@ -67,6 +68,10 @@
                 </div>
             </button>
         </div>
+        <div class="w-full flex justify-center mt-5">
+            <img src="{{ asset('images/stopka_WBG_duza.jpg') }}" alt="Logo WBG" class="drop-shadow-md" />
+        </div>
+
     </div>
 
     @if($showModal)

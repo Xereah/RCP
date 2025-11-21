@@ -15,6 +15,7 @@ class PersonelForm extends Form
     public $email = '';
     public $position_id = '';
     public $is_active = '';
+    public $work_place_id = '';
 
     public function rules(): array
     {
@@ -22,6 +23,7 @@ class PersonelForm extends Form
 			'personal_number' => 'string',
 			'last_name' => 'string',
 			'first_name' => 'string',
+            'work_place_id' => 'required',
 			'email' => 'string',
 			'position_id' => 'required',
 			'is_active' => 'required',
@@ -35,6 +37,7 @@ class PersonelForm extends Form
         $this->personal_number = $this->personelModel->personal_number;
         $this->last_name = $this->personelModel->last_name;
         $this->first_name = $this->personelModel->first_name;
+        $this->work_place_id = $this->personelModel->work_place_id;
         $this->email = $this->personelModel->email;
         $this->position_id = $this->personelModel->position_id;
         $this->is_active = $this->personelModel->is_active;

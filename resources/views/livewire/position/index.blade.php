@@ -119,7 +119,7 @@
                             <span class="font-semibold">{{ $positions->total() }}</span> wyników
                         </div>
                         <div class="flex space-x-1">
-                            {!! $roles->withQueryString()->links() !!}
+                            {!! $positions->withQueryString()->links() !!}
                         </div>
                     </div>
                 </div>

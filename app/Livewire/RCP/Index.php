@@ -192,24 +192,23 @@ class Index extends Component
      * Oblicza skorygowany czas pracy z zaokrągleniem nadgodzin.
      * Po 8h (480 min) nadgodziny zaokrąglane są w dół do pełnych 15 minut.
      */
-    private function calculateAdjustedDuration(int $durationMinutes): int
+    private function calculateAdjustedDuration(int|float $durationMinutes): int
     {
-        $standardWorkMinutes = 480; // 8 godzin
-
-        // Jeśli przepracowano 8h lub mniej, zwróć faktyczny czas
+        $durationMinutes = (int) floor($durationMinutes);
+    
+        $standardWorkMinutes = 480;
+    
         if ($durationMinutes <= $standardWorkMinutes) {
             return $durationMinutes;
         }
-
-        // Oblicz nadgodziny
+    
         $overtimeMinutes = $durationMinutes - $standardWorkMinutes;
-
-        // Zaokrąglij nadgodziny w dół do pełnych 15 minut
+    
         $roundedOvertimeMinutes = (int) (floor($overtimeMinutes / 15) * 15);
-
-        // Zwróć 8h + zaokrąglone nadgodziny
+    
         return $standardWorkMinutes + $roundedOvertimeMinutes;
     }
+    
 
     private function resolveStatusId(string $phase): int
     {

@@ -51,6 +51,12 @@ Route::get('/work-sessions/create', \App\Livewire\WorkSessions\Create::class)->n
 Route::get('/work-sessions/show/{workSession}', \App\Livewire\WorkSessions\Show::class)->name('work-sessions.show');
 Route::get('/work-sessions/update/{workSession}', \App\Livewire\WorkSessions\Edit::class)->name('work-sessions.edit');
 
+//miejsca pracy
+Route::get('/work-places', \App\Livewire\WorkPlaces\Index::class)->name('work-places.index');
+Route::get('/work-places/create', \App\Livewire\WorkPlaces\Create::class)->name('work-places.create');
+Route::get('/work-places/show/{workPlace}', \App\Livewire\WorkPlaces\Show::class)->name('work-places.show');
+Route::get('/work-places/update/{workPlace}', \App\Livewire\WorkPlaces\Edit::class)->name('work-places.edit');
+
 //panel RCP
 Route::get('/rcp-panel', \App\Livewire\RCP\Index::class)->name('rcp-panel.index');
 

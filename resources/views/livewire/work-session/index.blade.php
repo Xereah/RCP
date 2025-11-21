@@ -86,7 +86,7 @@
                                         <div class="w-2 h-8 bg-indigo-600 rounded-full mr-3"></div>
                                         <div>
                                             <div class="text-base font-semibold text-gray-900">
-                                                {{ $workSession->personel->personal_number }}
+                                                {{ $workSession->personel->personal_number ?? '-' }}
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +96,7 @@
                                     <div class="flex items-center">                                        
                                         <div>
                                             <div class="text-base font-semibold text-gray-900">
-                                                {{ $workSession->personel->last_name }}   {{ $workSession->personel->first_name }}
+                                                {{ $workSession->personel->last_name ?? '-' }}   {{ $workSession->personel->first_name ?? '-' }}
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +106,7 @@
                                     <div class="flex items-center">                                       
                                         <div>
                                             <div class="text-base font-semibold text-gray-900">
-                                            {{ $workSession->personel->position->name }}
+                                            {{ $workSession->personel->position->name ?? '-' }}
                                             </div>
                                         </div>
                                     </div>
@@ -116,7 +116,7 @@
                                     <div class="flex items-center">                                        
                                         <div>
                                             <div class="text-base font-semibold text-gray-900">
-                                            {{ $workSession->work_date }}
+                                            {{ $workSession->work_date ?? '-' }}
                                             </div>
                                         </div>
                                     </div>
@@ -126,7 +126,7 @@
                                     <div class="flex items-center">                                       
                                         <div>
                                             <div class="text-base font-semibold text-gray-900">
-                                            {{ $workSession->start_time }}
+                                            {{ $workSession->start_time ?? '-' }}
                                             </div>
                                         </div>
                                     </div>
@@ -156,7 +156,7 @@
                                     <div class="flex items-center">                                       
                                         <div>
                                             <div class="text-base font-semibold text-gray-900">
-                                            {{ $workSession->workStatus->name }}
+                                            {{ $workSession->workStatus->name ?? '-' }}
                                             </div>
                                         </div>
                                     </div>
@@ -166,7 +166,7 @@
                                     <div class="flex items-center">                                       
                                         <div>
                                             <div class="text-base font-semibold text-gray-900">
-                                                {{ $workSession->notes }}
+                                                {{ $workSession->notes ?? '-' }}
                                             </div>
                                         </div>
                                     </div>

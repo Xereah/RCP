@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('personal_number')->nullable();
             $table->string('last_name')->nullable();
             $table->string('first_name')->nullable();
+            $table->foreignId('work_place_id')->constrained('work_places');
             $table->string('email')->nullable();
             $table->foreignId('position_id')->constrained('position');
             $table->boolean('is_active')->default(true);       

@@ -14,21 +14,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {       
-        DB::table('roles')->insert([           
-            'name' => 'Super Admin',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-        DB::table('roles')->insert([           
-            'name' => 'Admin',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-        DB::table('roles')->insert([           
-            'name' => 'Accountant',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
         DB::table('users')->insert([
             'name' => 'Admin',
             'email' => 'admin@admin.com',
@@ -36,36 +21,6 @@ class UserSeeder extends Seeder
             'role_id' => 1, 
             'created_at' => now(),
             'updated_at' => now(),
-        ]);
-        DB::table('work_statuses')->insert([
-            'name' => 'Obecny',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-        DB::table('work_statuses')->insert([
-            'name' => 'Nieobecny',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-        DB::table('work_statuses')->insert([
-            'name' => 'Urlop wypoczynkowy',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-        DB::table('work_statuses')->insert([
-            'name' => 'Zwolnienie Lekarskie',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-        DB::table('work_statuses')->insert([
-            'name' => 'Wyjazd służbowy',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-        DB::table('work_statuses')->insert([
-            'name' => 'Nieobecny z zgody',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        ]);        
     }
 }
