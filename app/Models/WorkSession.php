@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +29,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class WorkSession extends Model
 {
+    private const STANDARD_WORK_MINUTES = 480;
+
     use SoftDeletes;
 
     protected $perPage = 20;
@@ -69,7 +73,7 @@ class WorkSession extends Model
         }
 
         $minutes = max(0, (int) $this->duration);
-        $standardWorkMinutes = 480; // 8 godzin
+        $standardWorkMinutes = self::STANDARD_WORK_MINUTES; // 8 godzin
 
         // Jeśli przepracowano 8h lub mniej, zwróć faktyczny czas
         if ($minutes <= $standardWorkMinutes) {
@@ -106,5 +110,35 @@ class WorkSession extends Model
         }
 
         return sprintf('%dh %02dmin', $hours, $leftover);
+    }
+
+    public function hasRecordedDuration(): bool
+    {
+        return $this->duration !== null;
+    }
+
+    public function getHasOvertimeAttribute(): bool
+    {
+        return $this->hasRecordedDuration() && $this->duration > self::STANDARD_WORK_MINUTES;
+    }
+
+    public function getIncompleteShiftWarningAttribute(): ?string
+    {
+        if (! $this->hasRecordedDuration()) {
+            return null;
+        }
+
+        return $this->duration < self::STANDARD_WORK_MINUTES
+            ? 'Nie przepracował pełnego czasu pracy'
+            : null;
+    }
+
+    public function getDisplayStatusAttribute(): string
+    {
+        if ($this->end_time !== null) {
+            return 'Obecny (zakończył pracę)';
+        }
+
+        return $this->workStatus->name ?? '-';
     }
 }

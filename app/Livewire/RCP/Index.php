@@ -29,6 +29,7 @@ class Index extends Component
     public ?string $alertMessage = null;
 
     public string $alertVariant = 'success';
+    public ?Personel $personel = null;
 
     protected function rules(): array
     {
@@ -127,6 +128,10 @@ class Index extends Component
             ->whereNotNull('start_time')
             ->exists();
 
+        $personel = Personel::query()
+            ->where('id', $personelId)
+            ->first();
+
         if ($todayEntryExists) {
             throw ValidationException::withMessages([
                 'employeeNumber' => 'Wejście zostało już zarejestrowane dla tego pracownika w dniu dzisiejszym.',
@@ -140,7 +145,7 @@ class Index extends Component
             'status_id' => $this->resolveStatusId('entry'),
         ]);
 
-        return 'Wejście zostało zapisane. Miłego dnia!';
+        return 'Witaj ' . $personel->first_name . ' ' . $personel->last_name . '! Wejście zostało zapisane. Miłego dnia!';
     }
 
     private function handleExit(int $personelId): string
@@ -157,6 +162,10 @@ class Index extends Component
             ]);
         }
 
+        $personel = Personel::query()
+        ->where('id', $personelId)
+        ->first();
+
         $now = now();
         $today = $now->toDateString();
 
@@ -169,9 +178,9 @@ class Index extends Component
 
         if ($todayExitExists) {
             throw ValidationException::withMessages([
-                'employeeNumber' => 'Wyjście zostało już zarejestrowane dla tego pracownika w dniu dzisiejszym.',
+                'employeeNumber' => 'Wyjście dla ' . $personel->first_name . ' ' . $personel->last_name . ' zostało już zarejestrowane w dniu dzisiejszym.',
             ]);
-        }
+        }    
 
         $start = Carbon::parse("{$session->work_date} {$session->start_time}");
         $durationMinutes = $start->diffInMinutes($now);
@@ -185,7 +194,7 @@ class Index extends Component
             'status_id' => $this->resolveStatusId('exit'),
         ]);
 
-        return 'Wyjście zostało zapisane. Do zobaczenia!';
+        return 'Dziękujemy za pracę ' . $personel->first_name . ' ' . $personel->last_name . '! Wyjście zostało zapisane. Do zobaczenia!';
     }
 
     /**
