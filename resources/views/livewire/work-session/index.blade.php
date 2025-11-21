@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-gradient-to-br from-gray-50 to-slate-100 py-4 px-4" 
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-slate-100" 
      x-data="{ showTooltip: null }">
     <div class="mx-auto">        
         <!-- Professional Header Card -->
@@ -51,17 +51,17 @@
                     <!-- Table Header -->
                     <thead class="bg-gray-50 border-b border-gray-200">
                         <tr>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Lp.</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Numer personalny</th>                            
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Imię i nazwisko</th>                            
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Stanowisko</th>                            
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Data</th>                            
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Godzina wejścia</th>                            
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Godzina wyjścia</th>  
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Zaliczony czas pracy</th>                            
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Status</th>                            
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Informacje</th>                          
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider"></th>                               
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Lp.</th>
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Numer personalny</th>                            
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Imię i nazwisko</th>                            
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Stanowisko</th>                            
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Data</th>                            
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Godzina wejścia</th>                            
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Godzina wyjścia</th>  
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Zaliczony czas pracy</th>                            
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Status</th>                            
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Informacje</th>                          
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider"></th>                               
                         </tr>
                     </thead>
                     
@@ -82,10 +82,9 @@
                                 
                                 <!-- User Name -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">
-                                        <div class="w-2 h-8 bg-indigo-600 rounded-full mr-3"></div>
+                                    <div class="flex items-center justify-center">                                        
                                         <div>
-                                            <div class="text-base font-semibold text-gray-900">
+                                            <div class="text-sm font-semibold text-gray-900">
                                                 {{ $workSession->personel->personal_number ?? '-' }}
                                             </div>
                                         </div>
@@ -93,9 +92,9 @@
                                 </td>
                                 <!-- Last Name -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">                                        
+                                    <div class="flex items-center justify-center">                                        
                                         <div>
-                                            <div class="text-base font-semibold text-gray-900">
+                                            <div class="text-sm font-semibold text-gray-900">
                                                 {{ $workSession->personel->last_name ?? '-' }}   {{ $workSession->personel->first_name ?? '-' }}
                                             </div>
                                         </div>
@@ -103,9 +102,9 @@
                                 </td>
                                 <!-- First Name -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">                                       
+                                    <div class="flex items-center justify-center">                                       
                                         <div>
-                                            <div class="text-base font-semibold text-gray-900">
+                                            <div class="text-sm font-semibold text-gray-900">
                                             {{ $workSession->personel->position->name ?? '-' }}
                                             </div>
                                         </div>
@@ -113,9 +112,9 @@
                                 </td>
                                 <!-- Position -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">                                        
+                                    <div class="flex items-center justify-center">                                        
                                         <div>
-                                            <div class="text-base font-semibold text-gray-900">
+                                            <div class="text-sm font-semibold text-gray-900">
                                             {{ $workSession->work_date ?? '-' }}
                                             </div>
                                         </div>
@@ -123,9 +122,9 @@
                                 </td>
                                 <!-- Work Date -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">                                       
+                                    <div class="flex items-center justify-center">                                       
                                         <div>
-                                            <div class="text-base font-semibold text-gray-900">
+                                            <div class="text-sm font-semibold text-gray-900">
                                             {{ $workSession->start_time ?? '-' }}
                                             </div>
                                         </div>
@@ -133,9 +132,9 @@
                                 </td>
                                 <!-- Start Time -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">                                       
+                                    <div class="flex items-center justify-center">                                       
                                         <div>
-                                            <div class="text-base font-semibold text-gray-900">
+                                            <div class="text-sm font-semibold text-gray-900">
                                             {{ $workSession->end_time ?? '-' }} 
                                             </div>
                                         </div>
@@ -143,9 +142,9 @@
                                 </td>
                                 <!-- End Time -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">                                        
+                                    <div class="flex items-center justify-center">                                        
                                         <div>
-                                            <div class="text-base font-semibold text-gray-900">
+                                            <div class="text-sm font-semibold text-gray-900">
                                                 {{ $workSession->duration_human ?? '-' }}
                                             </div>
                                         </div>
@@ -153,9 +152,9 @@
                                 </td>
                                 <!-- Status -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">                                       
+                                    <div class="flex items-center justify-center">                                       
                                         <div>
-                                            <div class="text-base font-semibold text-gray-900">
+                                            <div class="text-sm font-semibold text-gray-900">
                                             {{ $workSession->workStatus->name ?? '-' }}
                                             </div>
                                         </div>
@@ -163,9 +162,9 @@
                                 </td>
                                 <!-- Notes -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center">                                       
+                                    <div class="flex items-center justify-center">                                       
                                         <div>
-                                            <div class="text-base font-semibold text-gray-900">
+                                            <div class="text-sm font-semibold text-gray-900">
                                                 {{ $workSession->notes ?? '-' }}
                                             </div>
                                         </div>
