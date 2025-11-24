@@ -25,7 +25,7 @@ class WorkSessionForm extends Form
         return [
             'personel_id' => ['required', 'integer', 'exists:personel,id'],
             'work_date' => ['required', 'date'],
-            'start_time' => ['required', 'date_format:H:i'],
+            'start_time' => ['nullable', 'date_format:H:i'],
             'end_time' => ['nullable', 'date_format:H:i', 'after:start_time'],
             'notes' => ['nullable', 'string'],
             'status_id' => ['required', 'integer', 'exists:work_statuses,id'],
@@ -63,21 +63,22 @@ class WorkSessionForm extends Form
     {
         $data = $this->validate();
 
-        $data['duration'] = $this->calculateDurationMinutes(
-            $data['work_date'],
-            $data['start_time'],
-            $data['end_time'] ?? null
-        );
+        // Oblicz czas trwania tylko jeśli start_time i end_time są wypełnione
+        if (!blank($data['start_time']) && !blank($data['end_time'])) {
+            $data['duration'] = $this->calculateDurationMinutes(
+                $data['work_date'],
+                $data['start_time'],
+                $data['end_time']
+            );
+        } else {
+            $data['duration'] = null;
+        }
 
         return $data;
     }
 
-    protected function calculateDurationMinutes(string $date, string $start, ?string $end): ?int
+    protected function calculateDurationMinutes(string $date, string $start, string $end): int
     {
-        if (blank($end)) {
-            return null;
-        }
-
         $startDateTime = Carbon::parse("{$date} {$start}");
         $endDateTime = Carbon::parse("{$date} {$end}");
 

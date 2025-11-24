@@ -79,6 +79,13 @@ new class extends Component
         </a>
     </div>
     <div class="space-y-1">
+        <a href="{{ route('personels.time-report') }}"
+            class="flex items-center px-4 py-3 text-gray-200 rounded-lg hover:bg-indigo-600/30 transition-colors group">
+            <span class="material-icons-round text-gray-300 group-hover:text-indigo-400 mr-3">access_time</span>
+            <span class="text-xl font-semibold lg:block">Mój czas pracy</span>
+        </a>
+    </div>
+    <div class="space-y-1">
         <a href="{{ route('work-places.index') }}"
             class="flex items-center px-4 py-3 text-gray-200 rounded-lg hover:bg-indigo-600/30 transition-colors group">
             <span class="material-icons-round text-gray-300 group-hover:text-indigo-400 mr-3">work</span>

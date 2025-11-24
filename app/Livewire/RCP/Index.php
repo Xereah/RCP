@@ -17,7 +17,7 @@ class Index extends Component
 {
     private const STATUS_CANDIDATES = [
         'entry' => ['Obecny'],
-        'exit' => ['Nieobecny'],
+        'exit' => ['Obecny'],
     ];
 
     public bool $showModal = false;

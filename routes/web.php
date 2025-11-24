@@ -60,4 +60,7 @@ Route::get('/work-places/update/{workPlace}', \App\Livewire\WorkPlaces\Edit::cla
 //panel RCP
 Route::get('/rcp-panel', \App\Livewire\RCP\Index::class)->name('rcp-panel.index');
 
+//panel podglądu czasu pracy pracownika
+Route::get('/time-report', \App\Livewire\Personels\TimeReport::class)->name('personels.time-report');
+
 require __DIR__.'/auth.php';
