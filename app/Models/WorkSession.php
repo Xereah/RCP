@@ -64,7 +64,8 @@ class WorkSession extends Model
 
     /**
      * Zwraca zaokrąglony czas pracy zgodnie z zasadami nadgodzin.
-     * Po 8h nadgodziny są zaokrąglane w dół do pełnych 15 minut.
+     * Po standardowej normie nadgodziny są zaokrąglane w dół do pełnych 15 minut.
+     * Uwzględnia regulamin czasu pracy obowiązujący w dniu pracy.
      */
     public function getAdjustedDuration(): int
     {
@@ -73,9 +74,19 @@ class WorkSession extends Model
         }
 
         $minutes = max(0, (int) $this->duration);
-        $standardWorkMinutes = self::STANDARD_WORK_MINUTES; // 8 godzin
+        
+        // Pobierz regulamin czasu pracy obowiązujący w dniu pracy
+        $regulation = $this->getApplicableWorkTimeRegulation();
+        
+        // Jeśli pracownik ma regulamin, użyj go; w przeciwnym razie użyj standardowych 8h
+        if ($regulation) {
+            return $regulation->getAdjustedDuration($minutes);
+        }
+        
+        // Fallback do standardowych 8h
+        $standardWorkMinutes = self::STANDARD_WORK_MINUTES;
 
-        // Jeśli przepracowano 8h lub mniej, zwróć faktyczny czas
+        // Jeśli przepracowano standardowy czas lub mniej, zwróć faktyczny czas
         if ($minutes <= $standardWorkMinutes) {
             return $minutes;
         }
@@ -86,7 +97,7 @@ class WorkSession extends Model
         // Zaokrąglij nadgodziny w dół do pełnych 15 minut
         $roundedOvertimeMinutes = (int) (floor($overtimeMinutes / 15) * 15);
 
-        // Zwróć 8h + zaokrąglone nadgodziny
+        // Zwróć standardowy czas + zaokrąglone nadgodziny
         return $standardWorkMinutes + $roundedOvertimeMinutes;
     }
 
@@ -119,7 +130,21 @@ class WorkSession extends Model
 
     public function getHasOvertimeAttribute(): bool
     {
-        return $this->hasRecordedDuration() && $this->duration > self::STANDARD_WORK_MINUTES;
+        if (!$this->hasRecordedDuration()) {
+            return false;
+        }
+        
+        $regulation = $this->getApplicableWorkTimeRegulation();
+        
+        if ($regulation) {
+            // Dla zadaniowego czasu pracy nie ma nadgodzin
+            if ($regulation->is_task_based) {
+                return false;
+            }
+            return $this->duration > $regulation->getExpectedDailyMinutes();
+        }
+        
+        return $this->duration > self::STANDARD_WORK_MINUTES;
     }
 
     public function getIncompleteShiftWarningAttribute(): ?string
@@ -128,7 +153,18 @@ class WorkSession extends Model
             return null;
         }
 
-        return $this->duration < self::STANDARD_WORK_MINUTES
+        $regulation = $this->getApplicableWorkTimeRegulation();
+        
+        // Dla zadaniowego czasu pracy nie ma ostrzeżenia o niepełnym wymiarze
+        if ($regulation && $regulation->is_task_based) {
+            return null;
+        }
+        
+        $expectedMinutes = $regulation 
+            ? $regulation->getExpectedDailyMinutes() 
+            : self::STANDARD_WORK_MINUTES;
+
+        return $this->duration < $expectedMinutes
             ? 'Nie przepracował pełnego czasu pracy'
             : null;
     }
@@ -140,5 +176,45 @@ class WorkSession extends Model
         }
 
         return $this->workStatus->name ?? '-';
+    }
+
+    /**
+     * Pobiera regulamin czasu pracy obowiązujący w dniu pracy
+     */
+    public function getApplicableWorkTimeRegulation(): ?WorkTimeRegulation
+    {
+        if (!$this->personel || !$this->work_date) {
+            return null;
+        }
+
+        return $this->personel->getWorkTimeRegulationOnDate(
+            \Carbon\Carbon::parse($this->work_date)
+        );
+    }
+
+    /**
+     * Zwraca oczekiwany czas pracy dla danej sesji na podstawie regulaminu obowiązującego w dniu pracy
+     */
+    public function getExpectedDuration(): int
+    {
+        $regulation = $this->getApplicableWorkTimeRegulation();
+        
+        return $regulation 
+            ? $regulation->getExpectedDailyMinutes()
+            : self::STANDARD_WORK_MINUTES;
+    }
+
+    /**
+     * Zwraca informację o regulaminie czasu pracy obowiązującym w dniu pracy
+     */
+    public function getWorkTimeRegulationInfo(): ?string
+    {
+        $regulation = $this->getApplicableWorkTimeRegulation();
+        
+        if (!$regulation) {
+            return 'Brak przypisanego regulaminu';
+        }
+
+        return $regulation->name;
     }
 }

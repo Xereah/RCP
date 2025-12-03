@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property $deleted_at
  *
  * @property Position $position
+ * @property PersonelWorkTimeRegulationHistory[] $workTimeRegulationHistory
  * @property WorkSession[] $workSessions
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
@@ -60,5 +61,56 @@ class Personel extends Model
     public function workPlace()
     {
         return $this->belongsTo(\App\Models\WorkPlace::class, 'work_place_id', 'id');
+    }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function workTimeRegulationHistory()
+    {
+        return $this->hasMany(\App\Models\PersonelWorkTimeRegulationHistory::class, 'personel_id', 'id')
+            ->orderBy('valid_from', 'desc');
+    }
+
+    /**
+     * Pobiera aktualnie obowiązujący regulamin czasu pracy
+     */
+    public function getCurrentWorkTimeRegulation(): ?WorkTimeRegulation
+    {
+        $currentHistory = $this->workTimeRegulationHistory()
+            ->currentlyValid()
+            ->with('workTimeRegulation')
+            ->first();
+
+        return $currentHistory?->workTimeRegulation;
+    }
+
+    /**
+     * Pobiera regulamin czasu pracy obowiązujący w danym dniu
+     */
+    public function getWorkTimeRegulationOnDate(\Carbon\Carbon $date): ?WorkTimeRegulation
+    {
+        $history = $this->workTimeRegulationHistory()
+            ->validOnDate($date)
+            ->with('workTimeRegulation')
+            ->first();
+
+        return $history?->workTimeRegulation;
+    }
+
+    /**
+     * Sprawdza czy pracownik ma przypisany regulamin czasu pracy
+     */
+    public function hasWorkTimeRegulation(): bool
+    {
+        return $this->getCurrentWorkTimeRegulation() !== null;
+    }
+
+    /**
+     * Alias dla kompatybilności wstecznej
+     */
+    public function getWorkTimeRegulationAttribute(): ?WorkTimeRegulation
+    {
+        return $this->getCurrentWorkTimeRegulation();
     }
 }

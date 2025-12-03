@@ -1,0 +1,66 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-slate-100 py-4 px-4">
+    <div class="mx-auto">
+
+        <!-- Professional Header Card -->
+        <div
+            class="bg-white rounded-2xl shadow-lg border border-gray-200/50 p-8 hover:shadow-xl transition-shadow duration-300 mb-8">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <div class="flex items-center space-x-5">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900 mb-1">
+                            Edycja regulaminu
+                        </h1>
+                        <p class="text-lg text-gray-600">Modyfikuj dane regulaminu czasu pracy</p>
+                    </div>
+                </div>
+
+                <!-- Back Button -->
+                <div class="flex-shrink-0">
+                    <a href="{{ route('work-time-regulations.index') }}" wire:navigate
+                        class="inline-flex items-center px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        Powrót
+                    </a>
+                </div>
+            </div>
+        </div>      
+
+        <!-- Form Card -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-200/50 overflow-hidden">
+            <!-- Form Header -->
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-white">Formularz edycji regulaminu</h2>
+                </div>
+            </div>
+
+            <!-- Form Content -->
+            <div class="p-8">
+                <form method="POST" wire:submit="save" role="form" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    @include('livewire.work-time-regulation.form')
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

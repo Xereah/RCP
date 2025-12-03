@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             WorkStatusesSeeder::class,
             PositionSeeder::class,
             RolesSeeder::class,
+            WorkTimeRegulationSeeder::class,
         ]);
 
         

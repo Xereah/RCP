@@ -38,6 +38,7 @@ Route::get('/personels', \App\Livewire\Personels\Index::class)->name('personels.
 Route::get('/personels/create', \App\Livewire\Personels\Create::class)->name('personels.create');
 Route::get('/personels/show/{personel}', \App\Livewire\Personels\Show::class)->name('personels.show');
 Route::get('/personels/update/{personel}', \App\Livewire\Personels\Edit::class)->name('personels.edit');
+Route::get('/personels/{personel}/work-time-regulations', \App\Livewire\Personels\WorkTimeRegulations::class)->name('personels.work-time-regulations');
 
 //statusy obecnosci
 Route::get('/work-statuses', \App\Livewire\WorkStatuses\Index::class)->name('work-statuses.index');
@@ -56,6 +57,15 @@ Route::get('/work-places', \App\Livewire\WorkPlaces\Index::class)->name('work-pl
 Route::get('/work-places/create', \App\Livewire\WorkPlaces\Create::class)->name('work-places.create');
 Route::get('/work-places/show/{workPlace}', \App\Livewire\WorkPlaces\Show::class)->name('work-places.show');
 Route::get('/work-places/update/{workPlace}', \App\Livewire\WorkPlaces\Edit::class)->name('work-places.edit');
+
+//regulaminy czasu pracy
+Route::get('/work-time-regulations', \App\Livewire\WorkTimeRegulations\Index::class)->name('work-time-regulations.index');
+Route::get('/work-time-regulations/create', \App\Livewire\WorkTimeRegulations\Create::class)->name('work-time-regulations.create');
+Route::get('/work-time-regulations/show/{workTimeRegulation}', \App\Livewire\WorkTimeRegulations\Show::class)->name('work-time-regulations.show');
+Route::get('/work-time-regulations/update/{workTimeRegulation}', \App\Livewire\WorkTimeRegulations\Edit::class)->name('work-time-regulations.edit');
+
+//historia regulaminów czasu pracy dla pracowników
+Route::get('/personels/{personel}/work-time-regulations', \App\Livewire\Personels\WorkTimeRegulations::class)->name('personels.work-time-regulations');
 
 //panel RCP
 Route::get('/rcp-panel', \App\Livewire\RCP\Index::class)->name('rcp-panel.index');
