@@ -1,0 +1,112 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rcp-app
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      # Montuj .env (utwórz go z .env.example)
+      - ./.env:/var/www/html/.env
+      # Montuj storage dla trwałości danych
+      - ./storage:/var/www/html/storage
+      # Montuj bazę danych SQLite
+      - ./database/database.sqlite:/var/www/html/database/database.sqlite
+    networks:
+      - rcp-network
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_URL=https://rcp.wbg.lodzkie.pl
+      # Dane do MySQL - użyj tych ustawień dla MySQL
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=rcp_database
+      - DB_USERNAME=rcp_user
+      - DB_PASSWORD=rcp_password
+      # Lub zakomentuj powyższe i użyj pliku .env
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rcp-scheduler
+    restart: unless-stopped
+    command: php artisan schedule:work
+    volumes:
+      # Te same volumeny co app
+      - ./.env:/var/www/html/.env
+      - ./storage:/var/www/html/storage
+      - ./database/database.sqlite:/var/www/html/database/database.sqlite
+    networks:
+      - rcp-network
+    environment:
+      # Te same zmienne środowiskowe co app
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_URL=https://rcp.wbg.lodzkie.pl
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=rcp_database
+      - DB_USERNAME=rcp_user
+      - DB_PASSWORD=rcp_password
+    depends_on:
+      mysql:
+        condition: service_healthy
+      app:
+        condition: service_started
+      
+  mysql:
+    image: mysql:8.0
+    container_name: rcp-mysql
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: rcp_database
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: rcp_user
+      MYSQL_PASSWORD: rcp_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - rcp-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot_password"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 30s
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: rcp-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root_password
+    networks:
+      - rcp-network
+    depends_on:
+      - mysql
+
+networks:
+  rcp-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
+

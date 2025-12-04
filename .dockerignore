@@ -1,0 +1,51 @@
+# Ignoruj pliki Git
+.git
+.gitignore
+.gitattributes
+
+# Ignoruj pliki środowiska
+.env
+.env.*
+!.env.example
+
+# Ignoruj node_modules i vendor (będą instalowane w kontenerze)
+node_modules
+vendor
+
+# Ignoruj pliki cache i tymczasowe
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
+bootstrap/cache/*
+
+# Zachowaj strukturę katalogów storage
+!storage/framework/cache/.gitignore
+!storage/framework/sessions/.gitignore
+!storage/framework/views/.gitignore
+!storage/logs/.gitignore
+
+# Ignoruj pliki testowe
+tests
+phpunit.xml
+.phpunit.result.cache
+
+# Ignoruj pliki IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Ignoruj pliki Docker
+docker-compose.override.yml
+.docker
+
+# Ignoruj inne niepotrzebne pliki
+README.md
+docs
+*.md
+.editorconfig
+.php_cs
+.php_cs.cache
+
